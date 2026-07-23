@@ -77,3 +77,20 @@ it never predicts `negative` or `neutral` at all (0% recall for both), simply be
 confirming our earlier EDA decision to use macro F1 as the primary evaluation metric 
 rather than accuracy. Any model that beats this baseline must demonstrate real 
 predictive power on the minority classes, not just overall accuracy.
+
+## Model 1: Logistic Regression (TF-IDF + tabular features)
+
+Logistic Regression with `class_weight="balanced"` improves macro F1 from 0.31 
+(baseline) to **0.49** — a substantial gain in the model's ability to detect 
+minority classes (negative recall: 0% → 51%, neutral recall: 0% → 40%).
+
+This comes at the cost of overall accuracy (84.6% → 72.2%), since the model now 
+misclassifies some `positive` reviews as `negative`/`neutral` in exchange for much 
+better minority-class detection. This is the expected and desirable trade-off when 
+optimizing for macro F1 rather than accuracy — for a real business use case 
+(e.g., flagging negative reviews for customer support), catching more true 
+negatives matters more than raw accuracy on the already-easy majority class.
+
+Precision for `negative` (0.27) and `neutral` (0.20) remains low, meaning the model 
+still generates many false positives for these classes — an area for improvement 
+with more sophisticated models (fine-tuned transformers, ensemble methods).
