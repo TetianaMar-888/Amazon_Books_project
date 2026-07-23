@@ -68,3 +68,12 @@ non-verified reviewers are more likely to stay neutral.
 One extreme price outlier ($4,975.50) was investigated and found to be a 
 legitimate rare/collectible book listing rather than a parsing error, and was 
 therefore retained in the dataset.
+
+## Baseline Model
+
+A `most-frequent-class` baseline achieves 84.6% accuracy — but this is misleading:
+it never predicts `negative` or `neutral` at all (0% recall for both), simply because
+`positive` dominates the dataset. **Macro F1 of 0.31** exposes this weakness clearly, 
+confirming our earlier EDA decision to use macro F1 as the primary evaluation metric 
+rather than accuracy. Any model that beats this baseline must demonstrate real 
+predictive power on the minority classes, not just overall accuracy.
