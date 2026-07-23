@@ -10,6 +10,13 @@ This project demonstrates:
 
 These are core skills expected in modern Data Scientist roles across fintech, product, and data-driven companies.
 
+## Data Source
+Full dataset: McAuley-Lab/Amazon-Reviews-2023 (Books category), Hugging Face
+https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023
+
+Run `src/download_data.py` to reproduce the sample used in this project
+(50,000 reviews, seed=42).
+
 ## Exploratory Data Analysis (EDA)
 
 ### Target Variable Distribution
