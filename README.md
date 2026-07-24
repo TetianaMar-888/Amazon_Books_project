@@ -94,3 +94,35 @@ negatives matters more than raw accuracy on the already-easy majority class.
 Precision for `negative` (0.27) and `neutral` (0.20) remains low, meaning the model 
 still generates many false positives for these classes — an area for improvement 
 with more sophisticated models (fine-tuned transformers, ensemble methods).
+
+## Model 2: XGBoost (TF-IDF + tabular features)
+
+XGBoost was trained on the same feature set as Logistic Regression (TF-IDF text 
+vectors + tabular features), using `sample_weight` to address class imbalance.
+
+**Initial run** (n_estimators=300, max_depth=6, learning_rate=0.1): 
+macro F1 = **0.524**, accuracy = 77.2%.
+
+**Hyperparameter tuning:** A `RandomizedSearchCV` (4 candidates × 2-fold CV, 
+scoring=`f1_macro`) was run over `n_estimators`, `max_depth`, and `learning_rate`. 
+Due to compute constraints in Colab (a full search on the 35k training set was 
+computationally prohibitive), tuning was performed on a **10k stratified subsample**. 
+The best configuration found (n_estimators=200, max_depth=5, learning_rate=0.2) 
+achieved a CV macro F1 of 0.573 on the subsample.
+
+**Limitation:** When this best configuration was retrained on the full 35k 
+training set and evaluated on the full validation set, it performed slightly 
+worse (macro F1 = 0.514) than the original untuned configuration (macro F1 = 0.524). 
+This suggests that hyperparameters optimal on a subsample do not always transfer 
+perfectly to the full-scale model — a known trade-off of this tuning strategy 
+under compute constraints.
+
+**Final choice:** Given this result, the original configuration 
+(n_estimators=300, max_depth=6, learning_rate=0.1, macro F1 = 0.524) was retained 
+as the representative XGBoost result for comparison with other models, since it 
+achieved the best validation performance in practice.
+
+| Model | Params | Val Accuracy | Val Macro F1 | Train Time |
+|---|---|---|---|---|
+| XGBoost (initial) | n_estimators=300, max_depth=6, lr=0.1 | 77.2% | **0.524** | ~16 min |
+| XGBoost (tuned on 10k subsample) | n_estimators=200, max_depth=5, lr=0.2 | 76.0% | 0.514 | ~10 min |
