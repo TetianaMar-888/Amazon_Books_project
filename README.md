@@ -144,3 +144,24 @@ the marked improvement in both negative recall (66% vs 50%) and neutral recall
 (57% vs 40%). This confirms that for nuanced sentiment classification, a 
 transformer-based approach captures signal that bag-of-words methods miss — 
 despite being fine-tuned on a smaller subsample (10k vs 35k for classical models).
+
+### Note on Claude API Evaluation
+
+Unlike the other three models, the Claude API (zero-shot) was evaluated on a 
+smaller, stratified subsample of 400 validation examples rather than the full 
+7,500-example validation set, due to API cost and latency constraints (~1.7s 
+per request). Its confusion matrix is therefore shown separately and should not 
+be directly compared cell-by-cell with the other three models, though the 
+overall macro F1 and accuracy remain meaningful for comparison since the 
+subsample preserves the original class proportions.
+
+### Confusion Matrix Analysis
+
+Across all models, the most common error is confusing **neutral with positive** 
+reviews (a "soft" error, since these are semantically adjacent classes), rather 
+than confusing negative with positive (a "hard" error). 
+
+DistilBERT shows the fewest hard errors: only 49 negative reviews were 
+misclassified as positive (vs. 102 for Logistic Regression and 131 for XGBoost), 
+suggesting the transformer better captures sentiment polarity through context 
+rather than relying on individual keyword presence.
