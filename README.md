@@ -126,3 +126,21 @@ achieved the best validation performance in practice.
 |---|---|---|---|---|
 | XGBoost (initial) | n_estimators=300, max_depth=6, lr=0.1 | 77.2% | **0.524** | ~16 min |
 | XGBoost (tuned on 10k subsample) | n_estimators=200, max_depth=5, lr=0.2 | 76.0% | 0.514 | ~10 min |
+
+## Model 3: Fine-tuned DistilBERT
+
+DistilBERT, fine-tuned on an 10k stratified subsample of raw review text (3 epochs, 
+weighted cross-entropy loss), substantially outperforms both classical approaches:
+
+| Model | Val Accuracy | Val Macro F1 |
+|---|---|---|
+| Logistic Regression (TF-IDF) | 72.2% | 0.489 |
+| XGBoost (TF-IDF + tabular) | 77.2% | 0.524 |
+| **DistilBERT (fine-tuned)** | **88.1%** | **0.697** |
+
+Unlike the TF-IDF-based models, DistilBERT captures contextual and sequential 
+information in the text (e.g., negation handling, word order), which explains 
+the marked improvement in both negative recall (66% vs 50%) and neutral recall 
+(57% vs 40%). This confirms that for nuanced sentiment classification, a 
+transformer-based approach captures signal that bag-of-words methods miss — 
+despite being fine-tuned on a smaller subsample (10k vs 35k for classical models).
