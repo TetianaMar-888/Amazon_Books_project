@@ -165,3 +165,74 @@ DistilBERT shows the fewest hard errors: only 49 negative reviews were
 misclassified as positive (vs. 102 for Logistic Regression and 131 for XGBoost), 
 suggesting the transformer better captures sentiment polarity through context 
 rather than relying on individual keyword presence.
+
+## Model Comparison & Error Analysis
+
+### Summary Table
+
+| Model | Val Accuracy | Val Macro F1 | Train Time |
+|---|---|---|---|
+| Baseline (most frequent) | 84.6% | 0.306 | ~0 sec |
+| Logistic Regression (TF-IDF + tabular) | 72.2% | 0.489 | 39 sec |
+| XGBoost (TF-IDF + tabular, tuned) | 77.2% | 0.524 | ~16 min |
+| DistilBERT (fine-tuned, 10k subsample) | 88.1% | 0.697 | ~14 min |
+| Claude API (zero-shot, n=400 subsample) | 88.8% | **0.719** | 0 sec (no training) |
+
+DistilBERT and Claude API clearly outperform the classical ML approaches, 
+confirming that contextual/sequential understanding of text matters more than 
+bag-of-words features (TF-IDF) for this nuanced sentiment task.
+
+### Note on Claude API Evaluation
+Unlike the other three models, the Claude API (zero-shot) was evaluated on a 
+smaller, stratified subsample of 400 validation examples rather than the full 
+7,500-example validation set, due to API cost and latency constraints (~1.7s 
+per request). Its confusion matrix is therefore shown separately and should not 
+be directly compared cell-by-cell with the other three models, though the 
+overall macro F1 and accuracy remain meaningful for comparison since the 
+subsample preserves the original class proportions.
+
+### Confusion Matrix Analysis
+
+![Confusion Matrices - Classical Models](reports/confusion_matrices_classical.png)
+![Confusion Matrix - Claude API](reports/confusion_matrix_llm.png)
+
+Across all models, the most common error is confusing **neutral with positive** 
+reviews (a "soft" error, since these are semantically adjacent classes), rather 
+than confusing negative with positive (a "hard" error).
+
+DistilBERT shows the fewest hard errors: only 49 negative reviews were 
+misclassified as positive (vs. 102 for Logistic Regression and 131 for XGBoost), 
+suggesting the transformer better captures sentiment polarity through context 
+rather than relying on individual keyword presence.
+
+### Feature Importance (XGBoost)
+
+![Feature Importance](reports/feature_importance_xgb.png)
+
+The most influential features fall into two groups: (1) genuine sentiment 
+markers — `waste`, `disappointing`, `disappointed`, `poorly`, `boring`, `okay` — 
+which align with expected negative/neutral language; and (2) proper nouns 
+(`chrissy`, `rebecca review`, `scotland`) that likely correspond to specific 
+authors or reviewers whose books consistently received particular ratings in 
+the training set. This second group is a sign of mild overfitting to specific 
+entities rather than generalizable sentiment patterns — a limitation worth 
+addressing in future work (e.g., by removing named entities during preprocessing 
+or increasing training data diversity).
+
+### Qualitative Error Examples
+
+Most misclassifications share a common pattern: **sarcasm, irony, or indirect 
+criticism** that doesn't rely on explicit negative keywords. For example, a 
+review titled "Blasphemy" expressing deep disappointment with a beloved author's 
+work was misclassified as positive — the model likely responded to neutral or 
+even reverent-sounding language ("all time favorite", "mourned his passing") 
+without recognizing the ironic framing. Similarly, a review opening with "I 
+hated puzzle caches" (referring to past confusion) but concluding with success 
+and understanding was misclassified as negative, despite an ultimately positive 
+message — the model over-weighted the early negative word "hated" without 
+tracking the sentiment shift across the full text.
+
+These errors highlight a common limitation of both classical and transformer-based 
+sentiment models: **detecting sarcasm and sentiment shifts within a single review 
+remains challenging**, and would likely require either larger training data with 
+more diverse sarcastic examples, or explicit discourse-level modeling.
