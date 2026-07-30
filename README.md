@@ -215,3 +215,65 @@ These errors highlight a common limitation of both classical and transformer-bas
 sentiment models: **detecting sarcasm and sentiment shifts within a single review 
 remains challenging**, and would likely require either larger training data with 
 more diverse sarcastic examples, or explicit discourse-level modeling.
+
+## Business Insights & Recommendations
+
+- **Customer support prioritization:** Automatic flagging of negative reviews 
+  (66-88% recall depending on model) enables faster triage for customer support 
+  teams, reducing manual review time.
+- **Product quality monitoring:** Aggregating predicted sentiment trends over 
+  time per book/category could surface emerging quality issues before they 
+  escalate.
+- **Cost vs. performance trade-off:** For high-volume, real-time classification, 
+  a locally-hosted fine-tuned model (DistilBERT) is more cost-effective than 
+  per-request LLM API calls, despite Claude API's marginally higher accuracy.
+
+  ## Conclusions
+
+- **Best performing model:** Claude API (zero-shot) achieved the highest macro F1 
+  (0.719), closely followed by fine-tuned DistilBERT (0.697) — both substantially 
+  outperforming classical ML approaches (TF-IDF + XGBoost/Logistic Regression).
+- **Practical choice for deployment:** DistilBERT is recommended for production 
+  use due to its balance of strong performance, sub-second local inference, and 
+  no per-request cost — unlike the LLM API, which incurs latency and cost at scale.
+- **Key limitation:** All models struggle with sarcasm and reviews containing 
+  sentiment shifts, and XGBoost showed mild overfitting to specific named entities 
+  (author/reviewer names) rather than generalizable language patterns.
+- **Future improvements:** Larger fine-tuning datasets, removing named entities 
+  from features, ensemble methods combining DistilBERT + XGBoost, and explicit 
+  negation-aware tokenization (bigrams) could further improve minority-class recall.
+
+  ## Installation & Usage
+
+1. Clone the repository:
+```bash
+   git clone https://github.com/yourusername/Amazon_Books_project.git
+   cd Amazon_Books_project
+   pip install -r requirements.txt
+```
+2. Download the data sample:
+```bash
+   python src/download_data.py
+```
+3. Run notebooks in order: `01_eda.ipynb` → `02_feature_engineering.ipynb` → 
+   `03_baseline.ipynb` → `04_models.ipynb`
+
+   ## Project Structure
+```
+project-name/
+├── README.md
+├── requirements.txt
+├── data/
+│   └── README.md
+├── notebooks/
+│   ├── 01_eda.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   ├── 03_baseline.ipynb
+│   └── 04_models.ipynb
+├── src/
+│   ├── preprocessing.py
+│   ├── models.py
+│   └── evaluation.py
+├── models/
+└── reports/
+```
