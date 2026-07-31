@@ -145,6 +145,17 @@ the marked improvement in both negative recall (66% vs 50%) and neutral recall
 transformer-based approach captures signal that bag-of-words methods miss — 
 despite being fine-tuned on a smaller subsample (10k vs 35k for classical models).
 
+
+Due to file size constraints, trained model weights are not included in this 
+repository. To reproduce them:
+
+1. Run `notebooks/04_models.ipynb` — this will train and save:
+   - `models/xgb_model.pkl`
+   - `models/distilbert_model/`
+
+Alternatively, download pre-trained weights from [https://drive.google.com/file/d/1EYgMNTw2Q4Trp6cuduyuK-QwdB2_90nx/view?usp=sharing] 
+(250 MB total).
+
 ## Model Comparison & Error Analysis
 
 ### Summary Table
