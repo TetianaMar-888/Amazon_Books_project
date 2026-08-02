@@ -341,5 +341,5 @@ without recognizing the ironic, disappointed tone.
 
 ## Video Presentation
 
-[Loom video walkthrough (5 min)](LINK) — problem statement, data, models, 
+[Loom video walkthrough (5 min)](https://www.loom.com/share/90c0d2cdf0544d8f8a0aa8b07162ba03) — problem statement, data, models, 
 results, and business applications.
