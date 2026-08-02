@@ -38,6 +38,15 @@ https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023
 Run `src/download_data.py` to reproduce the sample used in this project
 (50,000 reviews, seed=42).
 
+## Sampling Note
+
+This project uses a random sample of 50,000 reviews out of an estimated 
+~29-30 million reviews in the Books category of the full Amazon Reviews 2023 
+dataset (based on the 20.1GB raw file size), representing less than 0.2% of 
+the full category. While the sample preserves realistic class imbalance and 
+diversity, results may not fully generalize to the entire book catalog on Amazon 
+(e.g., very niche or non-English titles may be underrepresented).
+
 ## Exploratory Data Analysis (EDA)
 
 ### Target Variable Distribution
