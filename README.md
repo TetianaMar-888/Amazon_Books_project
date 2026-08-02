@@ -214,20 +214,42 @@ or increasing training data diversity).
 ### Qualitative Error Examples
 
 Most misclassifications share a common pattern: **sarcasm, irony, or indirect 
-criticism** that doesn't rely on explicit negative keywords. For example, a 
-review titled "Blasphemy" expressing deep disappointment with a beloved author's 
-work was misclassified as positive — the model likely responded to neutral or 
-even reverent-sounding language ("all time favorite", "mourned his passing") 
-without recognizing the ironic framing. Similarly, a review opening with "I 
-hated puzzle caches" (referring to past confusion) but concluding with success 
-and understanding was misclassified as negative, despite an ultimately positive 
-message — the model over-weighted the early negative word "hated" without 
-tracking the sentiment shift across the full text.
+criticism** that doesn't rely on explicit negative keywords, as well as **sentiment 
+shifts** within a single review that the model fails to fully track.
 
-These errors highlight a common limitation of both classical and transformer-based 
-sentiment models: **detecting sarcasm and sentiment shifts within a single review 
-remains challenging**, and would likely require either larger training data with 
-more diverse sarcastic examples, or explicit discourse-level modeling.
+**Example 1 — Sarcasm/irony not recognized (false positive)**
+
+> "Blasphemy. I wanted to enjoy it, truly I did. Robert B. Parker was my all 
+> time favorite go to author. I truly mourned his passing..."
+
+- **True label:** negative
+- **Predicted:** positive
+
+The reviewer uses reverent, seemingly positive language ("all time favorite", 
+"mourned his passing") to set up an ironic contrast with their actual 
+disappointment. The model picks up on the surface-level positive vocabulary 
+without recognizing the sarcastic framing.
+
+**Example 2 — Sentiment shift not tracked (false negative)**
+
+> "Omg finally I understand. I hated puzzle caches...just because they confused 
+> me or I thought they made no sense. Now I'm attempting them with better 
+> understanding and success."
+
+- **True label:** positive
+- **Predicted:** negative
+
+The review opens with a strong negative word ("hated") describing a *past* 
+frustration, then pivots to a clearly positive resolution ("better understanding 
+and success"). The model appears to over-weight the early negative signal 
+without adjusting for the sentiment shift later in the text.
+
+**Takeaway:** Both classical and transformer-based models struggle with 
+sarcasm and sentiment shifts within a single review. Addressing this would 
+likely require larger fine-tuning datasets with more diverse sarcastic/mixed-
+sentiment examples, or explicit discourse-level modeling that tracks sentiment 
+across sentence boundaries rather than treating the review as a single 
+bag-of-context input.
 
 ## Business Insights & Recommendations
 
