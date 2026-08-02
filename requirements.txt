@@ -8,3 +8,5 @@ huggingface_hub
 matplotlib
 anthropic
 tqdm
+streamlit
+gdown
