@@ -1,4 +1,4 @@
-## Project Structure 
+# Project Structure 
 ```
 Amazon_Books_project/
 ├── README.md
@@ -18,7 +18,6 @@ Amazon_Books_project/
 │   └── distilbert_model/   # weights via Google Drive link above
 └── reports/                # EDA & evaluation plots
 ```
-
 
 # Amazon_Books_project
 Sentiment classification on Amazon Book Reviews using TF-IDF+XGBoost, fine-tuned DistilBERT, and LLM API — with EDA, imbalanced learning, and business insights.
