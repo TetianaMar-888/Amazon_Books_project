@@ -291,6 +291,10 @@ Amazon_Books_project/
 │   └── distilbert_model/   # weights via Google Drive link above
 └── reports/                # EDA & evaluation plots
 ```
+## 🚀 Live Demo
+
+Try the deployed model here: **[amazonbooksproject-tetianamar.streamlit.app](https://amazonbooksproject-tetianamar.streamlit.app/)**
+
 ## Video Presentation
 
 [Loom video walkthrough (5 min)](LINK) — problem statement, data, models, 
