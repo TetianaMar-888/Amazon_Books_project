@@ -1,3 +1,25 @@
+## Project Structure 
+```
+Amazon_Books_project/
+├── README.md
+├── requirements.txt
+├── data/
+│   └── README.md
+├── notebooks/
+│   ├── 01_eda.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   ├── 03_baseline.ipynb
+│   └── 04_models.ipynb
+├── src/
+│   ├── preprocessing.py
+│   ├── models.py
+│   └── evaluation.py
+├── models/
+│   └── distilbert_model/   # weights via Google Drive link above
+└── reports/                # EDA & evaluation plots
+```
+
+
 # Amazon_Books_project
 Sentiment classification on Amazon Book Reviews using TF-IDF+XGBoost, fine-tuned DistilBERT, and LLM API — with EDA, imbalanced learning, and business insights.
 
@@ -293,28 +315,8 @@ bag-of-context input.
 3. Run notebooks in order: `01_eda.ipynb` → `02_feature_engineering.ipynb` → 
    `03_baseline.ipynb` → `04_models.ipynb`
 
-   ## Project Structure 
-```
-Amazon_Books_project/
-├── README.md
-├── requirements.txt
-├── data/
-│   └── README.md
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   ├── 02_feature_engineering.ipynb
-│   ├── 03_baseline.ipynb
-│   └── 04_models.ipynb
-├── src/
-│   ├── preprocessing.py
-│   ├── models.py
-│   └── evaluation.py
-├── models/
-│   └── distilbert_model/   # weights via Google Drive link above
-└── reports/                # EDA & evaluation plots
-```
-
-## 🚀 Live Demo
+   
+## Live Demo
 
 Try the deployed model here: **[amazonbooksproject-tetianamar.streamlit.app](https://amazonbooksproject-tetianamar.streamlit.app/)**
 
