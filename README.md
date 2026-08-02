@@ -291,9 +291,21 @@ Amazon_Books_project/
 │   └── distilbert_model/   # weights via Google Drive link above
 └── reports/                # EDA & evaluation plots
 ```
+
 ## 🚀 Live Demo
 
 Try the deployed model here: **[amazonbooksproject-tetianamar.streamlit.app](https://amazonbooksproject-tetianamar.streamlit.app/)**
+
+**Example — correct positive classification:**
+![Positive example](reports/app_screenshot_positive.png)
+
+**Example — known limitation (sarcasm/irony not detected):**
+![Sarcasm limitation example](reports/app_screenshot_error_example.png)
+
+This second example ("Blasphemy... I truly mourned his passing") illustrates 
+the sarcasm-detection limitation discussed in the [Qualitative Error Examples](#qualitative-error-examples) 
+section above — the model reads surface-level positive/neutral language 
+without recognizing the ironic, disappointed tone.
 
 ## Video Presentation
 
