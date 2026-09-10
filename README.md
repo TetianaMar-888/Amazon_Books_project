@@ -312,7 +312,7 @@ bag-of-context input.
 
 1. Clone the repository:
 ```bash
-   git clone https://github.com/yourusername/Amazon_Books_project.git
+   git clone https://github.com/TetianaMar-888/Amazon_Books_project.git
    cd Amazon_Books_project
    pip install -r requirements.txt
 ```
